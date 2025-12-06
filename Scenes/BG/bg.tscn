@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dwdlh3odhmpeg"]
 
-[ext_resource type="Texture2D" uid="uid://ndgr1ke6hyd8" path="res://Assets/oak_woods_v1.0/background/background_layer_1.png" id="1_e8j8q"]
+[ext_resource type="Texture2D" uid="uid://dglruiahix1mu" path="res://Assets/oak_woods_v1.0/background/background_layer_1.png" id="1_e8j8q"]
 [ext_resource type="Script" uid="uid://5nnwnuv5ph6s" path="res://Scenes/BG/bg.gd" id="1_iq1of"]
-[ext_resource type="Texture2D" uid="uid://d371qowqkdlsd" path="res://Assets/oak_woods_v1.0/background/background_layer_2.png" id="2_iq1of"]
-[ext_resource type="Texture2D" uid="uid://cx5b0pycd5bt3" path="res://Assets/oak_woods_v1.0/background/background_layer_3.png" id="3_36ycx"]
+[ext_resource type="Texture2D" uid="uid://sl1do4vc6aey" path="res://Assets/oak_woods_v1.0/background/background_layer_2.png" id="2_iq1of"]
+[ext_resource type="Texture2D" uid="uid://cl5qg3wwa4cyw" path="res://Assets/oak_woods_v1.0/background/background_layer_3.png" id="3_36ycx"]
 
 [node name="BG" type="ParallaxBackground"]
 script = ExtResource("1_iq1of")
