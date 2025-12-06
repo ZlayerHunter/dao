@@ -7,11 +7,11 @@ var is_alive = true
 var player_in_attack_area = false
 var attack_started = false
 var health = 100
-
 @onready var anim = $AnimatedSprite2D
+@onready var health_label = $HealthLabel
 
 func _physics_process(delta):
-
+	health_label.text = "HP: " + str(health)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	

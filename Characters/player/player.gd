@@ -66,7 +66,7 @@ func perform_attack():
 func deal_damage():
 	for enemy in enemies_in_attack_area:
 		if enemy and enemy.has_method("apply_damage"):
-			enemy.apply_damage(100)
+			enemy.apply_damage(34)
 
 
 func update_animation(dir):
