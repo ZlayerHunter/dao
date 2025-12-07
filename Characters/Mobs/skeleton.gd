@@ -9,6 +9,9 @@ var attack_started = false
 var health = 100
 @onready var anim = $AnimatedSprite2D
 @onready var health_label = $HealthLabel
+@onready var gold = preload("res://Elements/gold.tscn")
+
+
 
 func _physics_process(delta):
 	health_label.text = "HP: " + str(health)
@@ -68,17 +71,22 @@ func _on_attack_area_body_entered(body):
 func apply_damage(damage: int):
 	health -= damage
 	if health <1:
+		health = 0
 		die()
 
 func die():
 	is_alive = false
 	anim.play("death")
 	await anim.animation_finished
+	var _gold = gold.instantiate()
+	_gold.position = position - Vector2(0, 0)
+	var colletibles = $"../../Colletibles"
+	colletibles.add_child(_gold)
 	queue_free()
-
 
 func _on_dearh_area_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
+		apply_damage(health)
 		body.velocity.y -= 200
 		die()
 

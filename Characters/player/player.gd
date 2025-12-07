@@ -13,6 +13,8 @@ var is_hurt = false
 var is_attacking = false
 var enemies_in_attack_area = []
 
+var gold = 0
+
 func _physics_process(delta):
 	if not is_alive:
 		return

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://dx71kjxbo65mt"]
+[gd_scene load_steps=14 format=4 uid="uid://dx71kjxbo65mt"]
 
 [ext_resource type="Texture2D" uid="uid://dglruiahix1mu" path="res://Assets/oak_woods_v1.0/background/background_layer_1.png" id="1_0f350"]
 [ext_resource type="Texture2D" uid="uid://sl1do4vc6aey" path="res://Assets/oak_woods_v1.0/background/background_layer_2.png" id="2_8c0lf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cdcmtexdt1ejt" path="res://Assets/oak_woods_v1.0/oak_woods_tileset.png" id="4_bvt00"]
 [ext_resource type="PackedScene" uid="uid://dy0q6qd8yylns" path="res://Characters/player/player.tscn" id="5_oqgf2"]
 [ext_resource type="PackedScene" uid="uid://cxnhomd2ea840" path="res://Characters/Mobs/skeleton.tscn" id="7_8c0lf"]
+[ext_resource type="PackedScene" uid="uid://cotwdn7ea0jm8" path="res://Elements/gold.tscn" id="7_754fn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1ainy"]
 texture = ExtResource("4_bvt00")
@@ -451,7 +452,28 @@ texture = ExtResource("4_bvt00")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1ainy")
 
+[sub_resource type="GDScript" id="GDScript_bvt00"]
+script/source = "extends Node2D
+
+@onready
+var skeleton = preload(\"res://Characters/Mobs/skeleton.tscn\")
+
+func _on_timer_timeout() -> void:
+	var _skeleton = skeleton.instantiate()
+	_skeleton.position = Vector2(550, 600)
+	add_child(_skeleton)
+"
+
 [sub_resource type="GDScript" id="GDScript_0f350"]
+script/source = "extends Label
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	text = \"HP: \" + str($\"../../Player/Player\".health)
+"
+
+[sub_resource type="GDScript" id="GDScript_8c0lf"]
 script/source = "extends Label
 
 
@@ -462,7 +484,21 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	text = \"HP: \" + str($\"../../Player/Player\".health)
+	text = \"Gold: \" + str($\"../../Player/Player\".gold)
+"
+
+[sub_resource type="GDScript" id="GDScript_754fn"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
 "
 
 [node name="Level" type="Node2D"]
@@ -506,6 +542,7 @@ tile_set = SubResource("TileSet_n6hdu")
 position = Vector2(191, 517)
 
 [node name="Mobs" type="Node2D" parent="."]
+script = SubResource("GDScript_bvt00")
 
 [node name="Skeleton" parent="Mobs" instance=ExtResource("7_8c0lf")]
 position = Vector2(407, 452)
@@ -513,9 +550,13 @@ position = Vector2(407, 452)
 [node name="Skeleton2" parent="Mobs" instance=ExtResource("7_8c0lf")]
 position = Vector2(782, 456)
 
+[node name="Timer" type="Timer" parent="Mobs"]
+wait_time = 10.059999999999999
+autostart = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="HPLabel" type="Label" parent="CanvasLayer"]
 offset_left = 17.0
 offset_top = 8.0
 offset_right = 153.0
@@ -523,3 +564,20 @@ offset_bottom = 50.0
 theme_override_font_sizes/font_size = 30
 text = "HP"
 script = SubResource("GDScript_0f350")
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer"]
+offset_left = 180.0
+offset_top = 8.0
+offset_right = 316.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 30
+text = "Gold"
+script = SubResource("GDScript_8c0lf")
+
+[node name="Colletibles" type="Node2D" parent="."]
+script = SubResource("GDScript_754fn")
+
+[node name="Gold" parent="Colletibles" instance=ExtResource("7_754fn")]
+position = Vector2(263, 540)
+
+[connection signal="timeout" from="Mobs/Timer" to="Mobs" method="_on_timer_timeout"]
